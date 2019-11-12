@@ -1,0 +1,62 @@
+{
+  "name": "pangumanito",
+  "version": "1.0.0",
+  "description": "初始化工具",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch 'src/' -e ts --exec 'tsc'",
+    "build": "tsc"
+  },
+  "bin": {
+    "pangumanito": "./build/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "github",
+    "gitlab"
+  ],
+  "author": "yjm <497501886@qq.com>",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^4.0.1",
+    "configstore": "^5.0.0",
+    "figlet": "^1.2.4",
+    "fullname": "^4.0.1",
+    "inquirer": "^7.0.0",
+    "lodash": "^4.17.15",
+    "update-notifier": "^3.0.1",
+    "yosay": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-proposal-do-expressions": "^7.5.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/commander": "^2.12.2",
+    "@types/configstore": "^4.0.0",
+    "@types/figlet": "^1.2.0",
+    "@types/fullname": "^2.1.29",
+    "@types/inquirer": "^6.5.0",
+    "@types/lodash": "^4.14.146",
+    "@types/node": "^12.12.5",
+    "@types/update-notifier": "^2.5.0",
+    "@types/yosay": "^0.0.29",
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-macros": "^2.6.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-typescript": "^0.14.0",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.5.3",
+    "typescript-eslint-parser": "^22.0.0"
+  }
+}

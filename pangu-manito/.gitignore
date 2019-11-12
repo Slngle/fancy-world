@@ -1,0 +1,15 @@
+dist/
+.temp/
+node_modules/
+template/
+.idea
+.idea/
+.rn_temp/
+package-lock.json
+.vscode/
+*.log
+.DS_Store
+npm-debug.log
+npm-debug.log.*
+selenium-debug.log
+.vscode
