@@ -1,5 +1,5 @@
 import path from 'path'
-
+import fs from 'fs'
 /*
  * 获取运行当前目录文件夹名称
  * */
@@ -19,4 +19,16 @@ export function getCurrentCWD(): string {
  * */
 export function getCurrentRoot(): string {
   return `${__dirname}/../..`
+}
+
+/*
+ * 读取文件夹
+ * */
+
+export function readdirFiles(folder: string): Promise<readFileInter> {
+  return new Promise((resolve, reject) => {
+    fs.readdir(folder, (err, paths) => {
+      resolve({ err, paths })
+    })
+  })
 }

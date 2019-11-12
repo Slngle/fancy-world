@@ -8,6 +8,11 @@ interface gitInter {
   group: string
 }
 
+interface readFileInter {
+  err: any
+  paths: any
+}
+
 interface hostInter {
   name: string
   value: hostType

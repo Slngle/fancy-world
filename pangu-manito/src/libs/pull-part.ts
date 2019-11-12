@@ -1,5 +1,6 @@
 import { getNowToken } from '../configStore'
-import { setTokenInquirer } from './questions-part'
+import { fileProcessing, setTokenInquirer } from './questions-part'
+import { readdirFiles } from '../utils/file-helper'
 
 export async function getToken(): Promise<gitInter> {
   const nowToken: gitInter = getNowToken()
@@ -11,4 +12,23 @@ export async function getToken(): Promise<gitInter> {
     const { host, token, group } = await setTokenInquirer()
     return { host, token, group }
   }
+}
+
+export async function buildFolder(folder: string): Promise<boolean> {
+  const { err, paths } = await readdirFiles(folder)
+  if (!err) {
+    if (paths && paths.length && !(paths.length == 1 && paths[0] == '.git')) {
+      // folder文件夹下有文件 询问是否删除还是合并
+      const success: boolean = await fileProcessing(folder)
+      return success
+    } else {
+      return true
+    }
+  } else {
+    return false
+  }
+}
+
+export async function pullCodeing(folder: string) {
+  await buildFolder(folder)
 }

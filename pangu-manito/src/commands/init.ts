@@ -1,10 +1,12 @@
 import { showCliName, showUserAllo } from '../libs/interaction-part'
-import { getToken } from '../libs/pull-part'
+import { getToken, pullCodeing } from '../libs/pull-part'
 
 export async function init(folder: string): Promise<any> {
-  showCliName()
-  await showUserAllo()
+  showCliName() // 展示下cli的名字
+  await showUserAllo() // 对你的一声问候
   const { host, token, group } = await getToken()
   if (host && token && group) {
+    // 如果拿到了token等信息
+    await pullCodeing(folder)
   }
 }
