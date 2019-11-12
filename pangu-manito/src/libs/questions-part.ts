@@ -1,6 +1,7 @@
 import inquirer from 'inquirer'
 import { addGitToken } from '../configStore'
 import { allReadyHave } from './interaction-part'
+import { safeDelete } from './file.part'
 
 export async function setTokenInquirer(): Promise<gitInter> {
   console.log()
@@ -73,8 +74,10 @@ export async function fileProcessing(folder: string): Promise<boolean> {
       ]
     }
   ])
+
   if (process == 'delete') {
-    return true
+    const success: boolean = await safeDelete(folder)
+    return success
   } else if (process == 'combine') {
     return true
   } else {

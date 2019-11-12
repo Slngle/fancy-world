@@ -31,7 +31,11 @@ var __awaiter =
     })
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-function create(folder) {
-  return __awaiter(this, void 0, void 0, function*() {})
+function safeDelete(folder) {
+  return __awaiter(this, void 0, void 0, function*() {
+    console.log(folder, 'folder')
+    return true
+    // await exec(`find ${folder}* -not -name ".git" | xargs rm -rf`, (err, out) => {})
+  })
 }
-exports.create = create
+exports.safeDelete = safeDelete
