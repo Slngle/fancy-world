@@ -3,8 +3,15 @@
  * */
 import { exec } from 'child_process'
 
-export async function safeDelete(folder: string): Promise<boolean> {
-  console.log(folder, 'folder')
-  return true
-  // await exec(`find ${folder}* -not -name ".git" | xargs rm -rf`, (err, out) => {})
+export function safeDelete(folder: string): Promise<boolean> {
+  return new Promise<boolean>(resolve => {
+    exec(`find ${folder}* -not -name ".git" | xargs rm -rf`, (err, out) => {
+      console.log(err, out, 'xxxx')
+      if (!err) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
 }
