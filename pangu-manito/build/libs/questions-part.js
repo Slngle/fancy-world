@@ -39,7 +39,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 const inquirer_1 = __importDefault(require('inquirer'))
 const configStore_1 = require('../configStore')
 const interaction_part_1 = require('./interaction-part')
-const file_part_1 = require('./file.part')
+const file_part_1 = require('./file-part')
 function setTokenInquirer() {
   return __awaiter(this, void 0, void 0, function*() {
     console.log()
@@ -115,8 +115,8 @@ function fileProcessing(folder) {
       }
     ])
     if (process == 'delete') {
-      const success = yield file_part_1.safeDelete(folder)
-      return success
+      file_part_1.safeDelete(folder, true)
+      return true
     } else if (process == 'combine') {
       return true
     } else {
