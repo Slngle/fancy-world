@@ -1,0 +1,1 @@
+type gitlabpangu = 'Groups'

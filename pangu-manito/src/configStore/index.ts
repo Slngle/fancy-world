@@ -1,6 +1,5 @@
 import Configstore from 'configstore'
 import { getCurrentRoot } from '../utils/file-helper'
-import { async } from 'rxjs/internal/scheduler/async'
 
 const pkg = require(`${getCurrentRoot()}/package.json`)
 

@@ -34,6 +34,7 @@ Object.defineProperty(exports, '__esModule', { value: true })
 const configStore_1 = require('../configStore')
 const questions_part_1 = require('./questions-part')
 const file_helper_1 = require('../utils/file-helper')
+const connect_1 = require('../connect')
 function getToken() {
   return __awaiter(this, void 0, void 0, function*() {
     const nowToken = configStore_1.getNowToken()
@@ -67,7 +68,11 @@ function buildFolder(folder) {
 exports.buildFolder = buildFolder
 function pullCodeing(folder) {
   return __awaiter(this, void 0, void 0, function*() {
-    yield buildFolder(folder)
+    const success = yield buildFolder(folder)
+    if (success) {
+      // 文件的问题解决了 就去对应的托管器选择要拉取的project
+      yield connect_1.chooseProject()
+    }
   })
 }
 exports.pullCodeing = pullCodeing

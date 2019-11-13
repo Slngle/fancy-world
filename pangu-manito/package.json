@@ -21,10 +21,12 @@
   "author": "yjm <497501886@qq.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/gitlab": "^2.0.0",
     "commander": "^4.0.1",
     "configstore": "^5.0.0",
     "figlet": "^1.2.4",
     "fullname": "^4.0.1",
+    "gitlab": "^11.4.2",
     "inquirer": "^7.0.0",
     "lodash": "^4.17.15",
     "update-notifier": "^3.0.1",

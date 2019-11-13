@@ -6,25 +6,13 @@ var __importDefault =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 const fs_1 = __importDefault(require('fs'))
-// export function safeDelete(folder: string): Promise<boolean> {
-//   return new Promise<boolean>(resolve => {
-//     exec(``, (err, out) => {
-//       console.log(err, out, 'xxxx')
-//       if (!err) {
-//         resolve(true)
-//       } else {
-//         resolve(false)
-//       }
-//     })
-//   })
-// }
-const re = /\.git/
 /*
- * 删除一个文件夹里面的所有东西
+ * 删除一个文件夹里面的所有东西 （除了folderExclude里面的）
  * */
+const folderExclude = /\.git/
 function safeDelete(folder, saveFirst) {
   let files
-  if (fs_1.default.existsSync(folder)) {
+  if (fs_1.default.existsSync(folder) && !folderExclude.test(folder)) {
     files = fs_1.default.readdirSync(folder)
     files.forEach((file, index) => {
       const curPath = `${folder}/${file}`

@@ -1,29 +1,12 @@
 import fs from 'fs'
 
 /*
- * 安全删除到废纸篓
+ * 删除一个文件夹里面的所有东西 （除了folderExclude里面的）
  * */
-import { exec } from 'child_process'
-// export function safeDelete(folder: string): Promise<boolean> {
-//   return new Promise<boolean>(resolve => {
-//     exec(``, (err, out) => {
-//       console.log(err, out, 'xxxx')
-//       if (!err) {
-//         resolve(true)
-//       } else {
-//         resolve(false)
-//       }
-//     })
-//   })
-// }
-
-const re = /\.git/
-/*
- * 删除一个文件夹里面的所有东西
- * */
+const folderExclude = /\.git/
 export function safeDelete(folder: string, saveFirst: boolean): void {
   let files: Array<string>
-  if (fs.existsSync(folder)) {
+  if (fs.existsSync(folder) && !folderExclude.test(folder)) {
     files = fs.readdirSync(folder)
     files.forEach((file, index) => {
       const curPath = `${folder}/${file}`
