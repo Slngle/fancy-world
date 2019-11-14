@@ -7,13 +7,19 @@ export function connect(): any {
     token,
     host
   })
-  return api
-  // {
-  //     Projects: {
-  //         all: () => {
-  //             return api.Projects.all()
-  //         }
-  //     },
-  //     groups: {}
-  // }
+  return {
+    Projects: {
+      all: payload => {
+        return api.Projects.all(payload)
+      }
+    },
+    Groups: {
+      all: (payload: object): any => {
+        return api.Groups.all(payload)
+      },
+      search: (nameOrPath: string): any => {
+        return api.Groups.search(nameOrPath)
+      }
+    }
+  }
 }

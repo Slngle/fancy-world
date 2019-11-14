@@ -84,3 +84,21 @@ export async function fileProcessing(folder: string): Promise<boolean> {
     return false
   }
 }
+
+export async function configStoreQes(): Promise<any> {
+  // @ts-ignore
+  const { config } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'config',
+      message: '想做什么操作呢？',
+      choices: [
+        {
+          name: '重置store',
+          value: 'reset'
+        }
+      ]
+    }
+  ])
+  return config
+}

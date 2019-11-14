@@ -1,18 +1,21 @@
 /*
  * 根据你本地的配置选择连接哪个代码管理器
  * */
-import { getNowHost } from '../configStore'
+import { getNowHost, getNowToken } from '../configStore'
 
 export function connectHost(): any {
   const nowHost = getNowHost()
   let api: any
   if (nowHost == 'gitlab') {
+    console.log('gitlab')
     const { connect } = require('./gitlab/gitlab-connect')
     api = connect()
   } else if (nowHost == 'github') {
+    console.log('github')
     const { connect } = require('./github/github-connect')
     api = connect()
   } else if (nowHost == 'npm') {
+    console.log('npm')
     const { connect } = require('./npm/npm-connect')
     api = connect()
   }
@@ -24,7 +27,9 @@ export function connectHost(): any {
  * */
 export async function chooseProject(): Promise<any> {
   const api = connectHost()
-  console.log(api.groups.all)
+  const { group } = getNowToken()
+  let chooseGroup = await api.Groups.search(group)
+  console.log(chooseGroup, 'chooseGroup')
 }
 
 /*

@@ -4,9 +4,14 @@ import { getCurrentRoot } from '../utils/file-helper'
 const pkg = require(`${getCurrentRoot()}/package.json`)
 
 const schema = {
-  hostList: [{ name: 'gitlab', value: 'gitlab' }, { name: 'github', value: 'github' }],
+  hostList: [
+    { name: 'gitlab', value: 'gitlab' },
+    { name: 'github', value: 'github' },
+    { name: 'npm', value: 'npm' }
+  ],
   github: [], // {host:'',token:'',group:''}
   gitlab: [], // {host:'',token:'',group:''}
+  npm: [],
   currentHost: 0,
   currentToken: 0
 }
@@ -55,4 +60,11 @@ export function configGet(key: storeKeyType): any {
 
 export function configSet(key: storeKeyType, value: any): void {
   config.set(key, value)
+}
+
+/*
+ * 根据schema重置store
+ * */
+export function resetConfig(): void {
+  config.set(schema)
 }
