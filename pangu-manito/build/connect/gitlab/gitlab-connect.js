@@ -43,6 +43,15 @@ function connect() {
                 return data;
             })
         },
+        RepositoryFiles: {
+            show: (projectId, filePath, ref, fileName) => __awaiter(this, void 0, void 0, function* () {
+                const spinner = ora_1.default(`start download ${fileName}`);
+                spinner.start();
+                const data = yield api.RepositoryFiles.show(projectId, filePath, ref);
+                spinner.stop();
+                return data;
+            })
+        },
         Tags: {
             all: (projectId) => __awaiter(this, void 0, void 0, function* () {
                 const spinner = ora_1.default('start loading groups...');

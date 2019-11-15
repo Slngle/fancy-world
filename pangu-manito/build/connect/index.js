@@ -81,7 +81,7 @@ function mkdir(path, options = {}) {
         });
     });
 }
-function writeFile(path, tempate = '') {
+function writeFile(path, tempate) {
     return new Promise(resolve => {
         fs_1.default.writeFile(path, tempate, err => {
             resolve(err);
@@ -90,32 +90,14 @@ function writeFile(path, tempate = '') {
 }
 function createSingle({ projectId, ref, folder, name, path }) {
     return __awaiter(this, void 0, void 0, function* () {
+        const api = connectHost();
         const re = /\/[^/]+$/;
         const folderPath = `${folder}/${path}`.replace(re, '');
-        const file_path = path;
+        const filePath = path;
+        const file = yield api.RepositoryFiles.show(projectId, filePath, ref, name);
+        let dataContent = new Buffer(file.content, 'base64').toString();
         yield mkdir(folderPath);
-        yield writeFile(`${folder}/${path}`);
-        console.log(folderPath, name, `${folder}/${path}`, 'folderPath');
-        return;
-        // const errFolder = await mkdir(folderPath, { recursive: true })
-        // if (!errFolder) {
-        //   const errFile = await writeFile(folderPath + filePath, tempate)
-        //   if (!errFile) {
-        //     return {
-        //       status: true
-        //     }
-        //   } else {
-        //     return {
-        //       status: false,
-        //       message: `${filePath} 创建失败！`
-        //     }
-        //   }
-        // } else {
-        //   return {
-        //     status: false,
-        //     message: `${folderPath} 创建失败！`
-        //   }
-        // }
+        yield writeFile(`${folder}/${path}`, dataContent);
         return true;
     });
 }
@@ -130,7 +112,13 @@ function createTemplate({ folder, files, path, ref, projectId }) {
     return __awaiter(this, void 0, void 0, function* () {
         for (const data of files) {
             if (data.type == 'blob') {
-                const status = yield createSingle({ projectId, ref, folder, name: data.name, path: data.path });
+                const status = yield createSingle({
+                    projectId,
+                    ref,
+                    folder,
+                    name: data.name,
+                    path: data.path
+                });
                 if (!status) {
                     return false;
                 }

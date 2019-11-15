@@ -65,7 +65,7 @@ function mkdir(path, options = {}) {
   })
 }
 
-function writeFile(path, tempate = '') {
+function writeFile(path, tempate) {
   return new Promise(resolve => {
     fs.writeFile(path, tempate, err => {
       resolve(err)
@@ -78,14 +78,10 @@ async function createSingle({ projectId, ref, folder, name, path }) {
   const re = /\/[^/]+$/
   const folderPath = `${folder}/${path}`.replace(re, '')
   const filePath = path
-  console.log(folderPath, filePath, 'xxxx')
   const file = await api.RepositoryFiles.show(projectId, filePath, ref, name)
   let dataContent = new Buffer(file.content, 'base64').toString()
-  console.log(dataContent)
-  return
   await mkdir(folderPath)
-  await writeFile(`${folder}/${path}`)
-  console.log(folderPath, name, `${folder}/${path}`, 'folderPath')
+  await writeFile(`${folder}/${path}`, dataContent)
   return true
 }
 
