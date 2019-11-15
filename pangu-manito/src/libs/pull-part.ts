@@ -1,7 +1,7 @@
 import { getNowToken } from '../configStore'
 import { fileProcessing, setTokenInquirer } from './questions-part'
 import { readdirFiles } from '../utils/file-helper'
-import { chooseProject, connectHost } from '../connect'
+import { chooseProject } from '../connect'
 
 export async function getToken(): Promise<gitInter> {
   const nowToken: gitInter = getNowToken()
@@ -34,6 +34,6 @@ export async function pullCodeing(folder: string) {
   const success = await buildFolder(folder)
   if (success) {
     // 文件的问题解决了 就去对应的托管器选择要拉取的project
-    await chooseProject()
+    await chooseProject(folder)
   }
 }

@@ -68,3 +68,35 @@ function allReadyHave() {
     console.log(chalk_1.default.yellow(`该host已存在！`));
 }
 exports.allReadyHave = allReadyHave;
+/*
+ * 没有该项目组
+ * */
+function noThisGroup(groupName) {
+    console.log();
+    console.log(chalk_1.default.yellow(`${groupName} 项目组不存在！`));
+}
+exports.noThisGroup = noThisGroup;
+/*
+ * 项目组下没有项目
+ * */
+function noProjects(groupName) {
+    console.log();
+    console.log(chalk_1.default.yellow(`${groupName} 下没有项目！`));
+}
+exports.noProjects = noProjects;
+/*
+ * 项目组下没有项目
+ * */
+function noTags() {
+    console.log();
+    console.log(chalk_1.default.yellow(`该项目没有发布的版本！`));
+}
+exports.noTags = noTags;
+/*
+ * 项目组下没有项目
+ * */
+function errorMessage() {
+    console.log();
+    console.log(chalk_1.default.yellow(`拉取项目失败！`));
+}
+exports.errorMessage = errorMessage;

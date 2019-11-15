@@ -52,3 +52,39 @@ export function allReadyHave(): void {
   console.log()
   console.log(chalk.yellow(`该host已存在！`))
 }
+
+/*
+ * 没有该项目组
+ * */
+
+export function noThisGroup(groupName: string): void {
+  console.log()
+  console.log(chalk.yellow(`${groupName} 项目组不存在！`))
+}
+
+/*
+ * 项目组下没有项目
+ * */
+
+export function noProjects(groupName: string): void {
+  console.log()
+  console.log(chalk.yellow(`${groupName} 下没有项目！`))
+}
+
+/*
+ * 项目组下没有项目
+ * */
+
+export function noTags(): void {
+  console.log()
+  console.log(chalk.yellow(`该项目没有发布的版本！`))
+}
+
+/*
+ * 项目组下没有项目
+ * */
+
+export function errorMessage(): void {
+  console.log()
+  console.log(chalk.yellow(`拉取项目失败！`))
+}

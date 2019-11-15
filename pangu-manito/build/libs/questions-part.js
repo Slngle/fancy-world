@@ -16,6 +16,9 @@ const inquirer_1 = __importDefault(require("inquirer"));
 const configStore_1 = require("../configStore");
 const interaction_part_1 = require("./interaction-part");
 const file_part_1 = require("./file-part");
+/*
+ * 在configStore里面插入信息
+ * */
 function setTokenInquirer() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log();
@@ -68,6 +71,9 @@ function setTokenInquirer() {
     });
 }
 exports.setTokenInquirer = setTokenInquirer;
+/*
+ * 如果有文件怎么处理
+ * */
 function fileProcessing(folder) {
     return __awaiter(this, void 0, void 0, function* () {
         // @ts-ignore
@@ -125,3 +131,52 @@ function configStoreQes() {
     });
 }
 exports.configStoreQes = configStoreQes;
+/*
+ * 选择projectId
+ * */
+function chooseProjectId(projects) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // @ts-ignore
+        projects = projects.map(data => {
+            return {
+                name: `${data.name}(${data.description || '无描述'})`,
+                value: data.id
+            };
+        });
+        console.log();
+        const { projectId } = yield inquirer_1.default.prompt([
+            {
+                type: 'list',
+                name: 'projectId',
+                message: '选择拉取哪一个仓库？',
+                choices: projects
+            }
+        ]);
+        return projectId;
+    });
+}
+exports.chooseProjectId = chooseProjectId;
+/*
+ * 选择版本号
+ * */
+function chooseTagName(tags) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // @ts-ignore
+        tags = tags.map(data => {
+            return {
+                name: `${data.name}(提交者：${data.commit.committer_name})`,
+                value: data.name
+            };
+        });
+        const { tagName } = yield inquirer_1.default.prompt([
+            {
+                type: 'list',
+                name: 'tagName',
+                message: '选择哪一个版本？',
+                choices: tags
+            }
+        ]);
+        return tagName;
+    });
+}
+exports.chooseTagName = chooseTagName;

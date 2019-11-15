@@ -3,6 +3,9 @@ import { addGitToken } from '../configStore'
 import { allReadyHave } from './interaction-part'
 import { safeDelete } from './file-part'
 
+/*
+ * 在configStore里面插入信息
+ * */
 export async function setTokenInquirer(): Promise<gitInter> {
   console.log()
   // @ts-ignore
@@ -51,6 +54,9 @@ export async function setTokenInquirer(): Promise<gitInter> {
   }
 }
 
+/*
+ * 如果有文件怎么处理
+ * */
 export async function fileProcessing(folder: string): Promise<boolean> {
   // @ts-ignore
   const { process } = await inquirer.prompt([
@@ -101,4 +107,50 @@ export async function configStoreQes(): Promise<any> {
     }
   ])
   return config
+}
+
+/*
+ * 选择projectId
+ * */
+export async function chooseProjectId(projects: Array<any>): Promise<number> {
+  // @ts-ignore
+  projects = projects.map(data => {
+    return {
+      name: `${data.name}(${data.description || '无描述'})`,
+      value: data.id
+    }
+  })
+  console.log()
+  const { projectId } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'projectId',
+      message: '选择拉取哪一个仓库？',
+      choices: projects
+    }
+  ])
+  return projectId
+}
+
+/*
+ * 选择版本号
+ * */
+
+export async function chooseTagName(tags: Array<any>): Promise<string> {
+  // @ts-ignore
+  tags = tags.map(data => {
+    return {
+      name: `${data.name}(提交者：${data.commit.committer_name})`,
+      value: data.name
+    }
+  })
+  const { tagName } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'tagName',
+      message: '选择哪一个版本？',
+      choices: tags
+    }
+  ])
+  return tagName
 }

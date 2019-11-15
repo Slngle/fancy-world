@@ -17,7 +17,7 @@ function init(folder) {
         yield interaction_part_1.showUserAllo(); // 对你的一声问候
         const { host, token, group } = yield pull_part_1.getToken();
         if (host && token && group) {
-            // 如果拿到了token等信息
+            // 如果拿到了token等信息 就去pull code
             yield pull_part_1.pullCodeing(folder);
         }
     });

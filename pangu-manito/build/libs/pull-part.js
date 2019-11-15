@@ -52,7 +52,7 @@ function pullCodeing(folder) {
         const success = yield buildFolder(folder);
         if (success) {
             // 文件的问题解决了 就去对应的托管器选择要拉取的project
-            yield connect_1.chooseProject();
+            yield connect_1.chooseProject(folder);
         }
     });
 }

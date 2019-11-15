@@ -29,6 +29,7 @@
     "gitlab": "^11.4.2",
     "inquirer": "^7.0.0",
     "lodash": "^4.17.15",
+    "ora": "^4.0.3",
     "update-notifier": "^3.0.1",
     "yosay": "^2.0.2"
   },
@@ -48,6 +49,7 @@
     "@types/inquirer": "^6.5.0",
     "@types/lodash": "^4.14.146",
     "@types/node": "^12.12.5",
+    "@types/ora": "^3.2.0",
     "@types/update-notifier": "^2.5.0",
     "@types/yosay": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
