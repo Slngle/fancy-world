@@ -37,8 +37,10 @@ function config() {
   return __awaiter(this, void 0, void 0, function*() {
     const config = yield questions_part_1.configStoreQes()
     if (config == 'reset') {
+      //重置configStore
       configStore_1.resetConfig()
     } else if (config == 'gitlab-auth') {
+      //修改
     }
   })
 }

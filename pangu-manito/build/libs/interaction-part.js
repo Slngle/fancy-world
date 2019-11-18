@@ -142,7 +142,7 @@ function showInfo() {
   const pkg = require(`${file_helper_1.getCurrentRoot()}/package.json`)
   const hostList = configStore_1.configGet('hostList')
   const platform = configStore_1.getNowHost()
-  const { host, token, group } = configStore_1.getNowToken()
+  const { host, group } = configStore_1.getNowToken()
   console.log()
   console.log(`  Pangumanito v${pkg.version}`)
   console.log()
@@ -166,6 +166,5 @@ function showInfo() {
   console.log(`    message:`)
   console.log(`      host: ${host}`)
   console.log(`      group: ${group}`)
-  // host:'',token:'',group:''
 }
 exports.showInfo = showInfo

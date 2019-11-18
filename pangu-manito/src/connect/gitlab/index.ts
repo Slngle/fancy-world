@@ -63,7 +63,7 @@ async function createSingle({ name, path }) {
   const re = /\/[^/]+$/
   const folderPath = `${folder}/${path}`.replace(re, '')
   const file = await api.RepositoryFiles.show(projectId, path, ref, name)
-  const dataContent = new Buffer(file.content, 'base64').toString()
+  const dataContent = Buffer.from(file.content, 'base64').toString()
   await mkdir(folderPath, { recursive: true })
   await writeFile(`${folder}/${path}`, dataContent)
   return true

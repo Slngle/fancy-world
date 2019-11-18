@@ -95,7 +95,7 @@ function createSingle({ name, path }) {
     const re = /\/[^/]+$/
     const folderPath = `${folder}/${path}`.replace(re, '')
     const file = yield api.RepositoryFiles.show(projectId, path, ref, name)
-    const dataContent = new Buffer(file.content, 'base64').toString()
+    const dataContent = Buffer.from(file.content, 'base64').toString()
     yield file_helper_1.mkdir(folderPath, { recursive: true })
     yield file_helper_1.writeFile(`${folder}/${path}`, dataContent)
     return true
