@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import yosay from 'yosay'
 import fullname from 'fullname'
 import { isString } from 'lodash'
+import { configGet, getNowHost, getNowToken } from '../configStore'
 
 const pkg = require(`${getCurrentRoot()}/package.json`)
 /*
@@ -87,4 +88,48 @@ export function noTags(): void {
 export function errorMessage(): void {
   console.log()
   console.log(chalk.yellow(`拉取项目失败！`))
+}
+
+/*
+ * 已有该文件夹的名称
+ * */
+
+export function alreadyHave(projectName: string): void {
+  console.log()
+  console.log(chalk.yellow(`当前目录已有名为 ${projectName} 的文件夹！`))
+}
+
+/*
+ * 展示info信息
+ * */
+
+export function showInfo(): void {
+  const pkg = require(`${getCurrentRoot()}/package.json`)
+  const hostList = configGet('hostList')
+  const platform = getNowHost()
+  const { host, token, group } = getNowToken()
+  console.log()
+  console.log(`  Pangumanito v${pkg.version}`)
+  console.log()
+  console.log(`  Pangumanito configStore info:`)
+  hostList.forEach(data => {
+    const value = data.value
+    const platValue = configGet(value)
+    console.log(`    ${value}:`)
+    if (platValue.length) {
+      platValue.forEach(item => {
+        console.log(`      host:${item.host}`)
+      })
+    } else {
+      console.log(`      host:null`)
+    }
+  })
+  console.log()
+  console.log(`  User choose platform info:`)
+  console.log(`    platform:`)
+  console.log(`      ${platform}`)
+  console.log(`    message:`)
+  console.log(`      host: ${host}`)
+  console.log(`      group: ${group}`)
+  // host:'',token:'',group:''
 }

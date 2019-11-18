@@ -31,27 +31,16 @@ var __awaiter =
     })
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-const configStore_1 = require('../configStore')
-const interaction_part_1 = require('../libs/interaction-part')
-const questions_part_1 = require('../libs/questions-part')
-const file_helper_1 = require('../utils/file-helper')
+const configStore_1 = require('../../configStore')
+const interaction_part_1 = require('../../libs/interaction-part')
+const questions_part_1 = require('../../libs/questions-part')
+const file_helper_1 = require('../../utils/file-helper')
 /*
- * 根据你本地的配置选择连接哪个代码管理器
+ * 连接api
  * */
 function connectHost() {
-  const nowHost = configStore_1.getNowHost()
-  let api
-  if (nowHost == 'gitlab') {
-    const { connect } = require('./gitlab/gitlab-connect')
-    api = connect()
-  } else if (nowHost == 'github') {
-    const { connect } = require('./github/github-connect')
-    api = connect()
-  } else if (nowHost == 'npm') {
-    const { connect } = require('./npm/npm-connect')
-    api = connect()
-  }
-  return api
+  const { connect } = require('./gitlab-connect')
+  return connect()
 }
 exports.connectHost = connectHost
 /*

@@ -32,3 +32,34 @@ export function readdirFiles(folder: string): Promise<readFileInter> {
     })
   })
 }
+
+/*
+ * 创建文件Promise版
+ * */
+
+export function mkdir(path, options = {}): Promise<any> {
+  return new Promise(resolve => {
+    fs.mkdir(path, options, err => {
+      resolve(err)
+    })
+  })
+}
+
+export function writeFile(path, tempate): Promise<any> {
+  return new Promise(resolve => {
+    fs.writeFile(path, tempate, err => {
+      resolve(err)
+    })
+  })
+}
+
+/*
+ * 判断路径是否存在
+ * */
+export function folderNotStat(path): Promise<any> {
+  return new Promise((resolve, reject) => {
+    fs.stat(path, (err, stats) => {
+      resolve(err)
+    })
+  })
+}

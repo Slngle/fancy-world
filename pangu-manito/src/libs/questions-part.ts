@@ -9,23 +9,7 @@ import { safeDelete } from './file-part'
 export async function setTokenInquirer(): Promise<gitInter> {
   console.log()
   // @ts-ignore
-  const { host, group, token } = await inquirer.prompt([
-    {
-      name: 'host',
-      type: 'input',
-      message: `拉取文件的git源地址  `
-    },
-    {
-      name: 'group',
-      type: 'input',
-      message: `拉取文件的git源地址下的哪个组  `
-    },
-    {
-      name: 'token',
-      type: 'input',
-      message: `git源地址的Private token  `
-    }
-  ])
+  const { host, group, token } = getGitLabAuthMessage()
   if (host && group && token) {
     // 正常填写 加到configstore里面去 然后返还
     const nowTokenGet: gitInter = {
@@ -52,6 +36,33 @@ export async function setTokenInquirer(): Promise<gitInter> {
       token: ''
     }
   }
+}
+
+/*
+ * 询问授权信息
+ * */
+
+export async function getGitLabAuthMessage(): Promise<gitInter> {
+  console.log()
+  // @ts-ignore
+  const { host, group, token } = await inquirer.prompt([
+    {
+      name: 'host',
+      type: 'input',
+      message: `拉取文件的git源地址  `
+    },
+    {
+      name: 'group',
+      type: 'input',
+      message: `拉取文件的git源地址下的哪个组  `
+    },
+    {
+      name: 'token',
+      type: 'input',
+      message: `git源地址的Private token  `
+    }
+  ])
+  return { host, group, token }
 }
 
 /*
@@ -102,6 +113,10 @@ export async function configStoreQes(): Promise<any> {
         {
           name: '重置store',
           value: 'reset'
+        },
+        {
+          name: '编辑Gitlab授权信息',
+          value: 'gitlab-auth'
         }
       ]
     }

@@ -13,6 +13,12 @@ interface readFileInter {
   paths: any
 }
 
+interface chooseMessage {
+  projectId: string | number
+  ref: string | number
+  folder: string
+}
+
 interface hostInter {
   name: string
   value: hostType
