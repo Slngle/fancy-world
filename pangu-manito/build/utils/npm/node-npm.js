@@ -36,33 +36,43 @@ var __importDefault =
     return mod && mod.__esModule ? mod : { default: mod }
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-const configStore_1 = require('../../configStore')
-const ora_1 = __importDefault(require('ora'))
-const node_npm_1 = __importDefault(require('../../utils/npm/node-npm'))
-function connect() {
-  const { host, token, group } = configStore_1.getNowToken()
-  const api = new node_npm_1.default(host, group, token)
-  return {
-    Tags: {
-      all: projectId =>
-        __awaiter(this, void 0, void 0, function*() {
-          const spinner = ora_1.default('start loading groups...')
-          spinner.start()
-          const data = yield api.Tags.all(projectId)
-          spinner.stop()
-          return data
+const npm_groups_1 = __importDefault(require('./npm-groups'))
+const npm_tags_1 = __importDefault(require('./npm-tags'))
+class Npm {
+  constructor(host, organization, userName) {
+    this.Groups = (function() {
+      const api = new npm_groups_1.default()
+      return {
+        search(payload) {
+          return __awaiter(this, void 0, void 0, function*() {
+            yield api.search(payload)
+          })
+        }
+      }
+    })()
+    this.Tags = (function() {
+      const api = new npm_groups_1.default()
+      return {
+        all(payload) {
+          return __awaiter(this, void 0, void 0, function*() {
+            yield api.all(payload)
+          })
+        }
+      }
+    })()
+    this.userName = userName
+    this.host = host
+    this.organization = organization
+  }
+  Tags() {
+    const api = new npm_tags_1.default()
+    return {
+      all(payload) {
+        return __awaiter(this, void 0, void 0, function*() {
+          yield api.all(payload)
         })
-    },
-    Groups: {
-      search: organizations =>
-        __awaiter(this, void 0, void 0, function*() {
-          const spinner = ora_1.default('start search groups...')
-          spinner.start()
-          const data = yield api.Groups.search(organizations)
-          spinner.stop()
-          return data
-        })
+      }
     }
   }
 }
-exports.connect = connect
+exports.default = Npm

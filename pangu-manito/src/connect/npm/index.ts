@@ -9,5 +9,9 @@ export function connectHost(): any {
 }
 
 /*
- * 连接api
+ * 选择拉取项目的东西
  * */
+export async function chooseProject() {
+  const api = connectHost()
+  await api.Groups.search()
+}

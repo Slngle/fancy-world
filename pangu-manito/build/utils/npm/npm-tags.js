@@ -31,10 +31,9 @@ var __awaiter =
     })
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-const interaction_part_1 = require('../libs/interaction-part')
-function show() {
-  return __awaiter(this, void 0, void 0, function*() {
-    interaction_part_1.showInfo()
-  })
+class Groups {
+  all(payload) {
+    return __awaiter(this, void 0, void 0, function*() {})
+  }
 }
-exports.show = show
+exports.default = Groups

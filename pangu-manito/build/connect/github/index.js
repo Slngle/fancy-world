@@ -1,10 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
 /*
  * 连接api
  * */
 function connectHost() {
-    const { connect } = require('./github-connect');
-    return connect();
+  const { connect } = require('./github-connect')
+  return connect()
 }
-exports.connectHost = connectHost;
+exports.connectHost = connectHost
