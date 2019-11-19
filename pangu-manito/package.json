@@ -1,6 +1,6 @@
 {
   "name": "@fancy-world/pangumanito",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "初始化工具",
   "main": "./build/index.js",
   "scripts": {

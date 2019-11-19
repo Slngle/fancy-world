@@ -1,15 +1,23 @@
 import inquirer from 'inquirer'
-import { addGitToken } from '../configStore'
+import { addGitToken, configGet } from '../configStore'
 import { allReadyHave } from './interaction-part'
 import { safeDelete } from './file-part'
 
 /*
  * 在configStore里面插入信息
  * */
-export async function setTokenInquirer(): Promise<gitInter> {
+export async function setTokenInquirer(platform: hostType): Promise<gitInter> {
   console.log()
   // @ts-ignore
-  const { host, group, token } = getGitLabAuthMessage()
+  let authMessage: gitInter = {}
+  if (platform == 'gitlab') {
+    authMessage = await getGitLabAuthMessage()
+  } else if (platform == 'github') {
+    authMessage = await getGitHubAuthMessage()
+  } else {
+    authMessage = await getNpmAuthMessage()
+  }
+  const { host, group, token } = authMessage
   if (host && group && token) {
     // 正常填写 加到configstore里面去 然后返还
     const nowTokenGet: gitInter = {
@@ -18,7 +26,7 @@ export async function setTokenInquirer(): Promise<gitInter> {
       token
     }
     // 检测该host是否存在 不存在就塞进去
-    const success: boolean = await addGitToken(nowTokenGet)
+    const success: boolean = await addGitToken(nowTokenGet, platform)
     if (success) {
       return nowTokenGet
     } else {
@@ -36,6 +44,23 @@ export async function setTokenInquirer(): Promise<gitInter> {
       token: ''
     }
   }
+}
+
+/*
+ * 选择哪一个平台
+ * */
+export async function choosePlatform(): Promise<platform> {
+  console.log()
+  const hostList = configGet('hostList')
+  const { platform } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'platform',
+      message: '请选择平台',
+      choices: hostList
+    }
+  ])
+  return { platform }
 }
 
 /*
@@ -60,6 +85,72 @@ export async function getGitLabAuthMessage(): Promise<gitInter> {
       name: 'token',
       type: 'input',
       message: `git源地址的Private token  `
+    }
+  ])
+  return { host, group, token }
+}
+
+/*
+ * github的授权信息
+ * */
+
+export async function getGitHubAuthMessage(): Promise<gitInter> {
+  console.log()
+  // @ts-ignore
+  const { host, group, token } = await inquirer.prompt([
+    {
+      name: 'host',
+      type: 'list',
+      message: `npm的url地址  `,
+      choices: [
+        {
+          name: 'https://www.npmjs.com',
+          value: 'https://www.npmjs.com'
+        }
+      ]
+    },
+    {
+      name: 'group',
+      type: 'input',
+      message: `请填写npm的Organizations  `
+    },
+    {
+      name: 'token',
+      type: 'input',
+      message: `请填写npm的用户名  `
+    }
+  ])
+  return { host, group, token }
+}
+
+/*
+ * npm的授权信息
+ * */
+
+export async function getNpmAuthMessage(): Promise<gitInter> {
+  console.log()
+  // @ts-ignore
+  const { host, group, token } = await inquirer.prompt([
+    {
+      name: 'host',
+      type: 'list',
+      message: `npm的url地址  `,
+      choices: [
+        {
+          name: 'https://www.npmjs.com',
+          value: 'https://www.npmjs.com'
+        }
+      ]
+    },
+    {
+      name: 'group',
+      type: 'input',
+      message: `请填写npm的Organizations  `
+    },
+    {
+      name: 'token',
+      type: 'input',
+      message: `请填写npm的用户名  `
     }
   ])
   return { host, group, token }

@@ -1,7 +1,7 @@
-import { getNowHost, getNowToken } from '../configStore'
-import { fileProcessing, setTokenInquirer } from './questions-part'
+import { configSet, getNowHost, getNowToken } from '../configStore'
+import { choosePlatform, fileProcessing, setTokenInquirer } from './questions-part'
 import { readdirFiles } from '../utils/file-helper'
-import { chooseProject } from '../connect/gitlab/index'
+import { chooseProject } from '../connect/gitlab'
 
 export async function getToken(): Promise<gitInter> {
   const nowToken: gitInter = getNowToken()
@@ -9,9 +9,23 @@ export async function getToken(): Promise<gitInter> {
     // 如果有直接返回当前的
     return nowToken
   } else {
-    // 如果没有直接去创建
-    const { host, token, group } = await setTokenInquirer()
-    return { host, token, group }
+    // 如果没有去创建
+    //1. 选择平台
+    const { platform } = await choosePlatform()
+    //2. (第一次添加)设置为默认平台
+    configSet('currentHost', platform)
+    //3. 写入内容
+    if (platform == 'gitlab') {
+      const { host, token, group } = await setTokenInquirer('gitlab')
+      return { host, token, group }
+    } else if (platform == 'github') {
+      return { host: '', token: '', group: '' }
+    } else if (platform == 'npm') {
+      const { host, token, group } = await setTokenInquirer('npm')
+      return { host, token, group }
+    } else {
+      return { host: '', token: '', group: '' }
+    }
   }
 }
 
@@ -37,6 +51,7 @@ export async function pullCodeing(folder: string) {
     const host = getNowHost()
     if (host == 'gitlab') {
       await chooseProject(folder)
+    } else if (host == 'npm') {
     }
   }
 }

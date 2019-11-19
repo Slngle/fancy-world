@@ -7,3 +7,7 @@ export function connectHost(): any {
   const { connect } = require('./npm-connect')
   return connect()
 }
+
+/*
+ * 连接api
+ * */

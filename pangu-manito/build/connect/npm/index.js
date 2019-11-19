@@ -1,10 +1,13 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /*
  * 连接api
  * */
 function connectHost() {
-  const { connect } = require('./npm-connect')
-  return connect()
+    const { connect } = require('./npm-connect');
+    return connect();
 }
-exports.connectHost = connectHost
+exports.connectHost = connectHost;
+/*
+ * 连接api
+ * */

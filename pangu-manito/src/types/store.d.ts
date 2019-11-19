@@ -1,6 +1,10 @@
-type hostType = 'gitlab' | 'github'
+type hostType = 'gitlab' | 'github' | 'npm'
 
-type storeKeyType = 'hostList' | 'github' | 'gitlab' | 'currentHost' | 'currentToken'
+type storeKeyType = 'hostList' | 'github' | 'gitlab' | 'npm' | 'currentHost' | 'currentToken'
+
+interface platform {
+  platform: hostType
+}
 
 interface gitInter {
   host: string

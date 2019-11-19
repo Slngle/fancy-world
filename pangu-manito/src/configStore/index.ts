@@ -6,13 +6,13 @@ const pkg = require(`${getCurrentRoot()}/package.json`)
 const schema = {
   hostList: [
     { name: 'gitlab', value: 'gitlab' },
-    { name: 'github', value: 'github' },
+    // { name: 'github', value: 'github' },
     { name: 'npm', value: 'npm' }
   ],
   github: [], // {host:'',token:'',group:''}
   gitlab: [], // {host:'',token:'',group:''}
-  npm: [],
-  currentHost: 0,
+  npm: [], // {host:'',token:'',group:''}
+  currentHost: 'gitlab',
   currentToken: 0
 }
 
@@ -22,9 +22,8 @@ const config = new Configstore(pkg.name, schema)
  * 获取当前的hostType 目前（gitlab|github）
  * */
 export function getNowHost(): hostType {
-  const hostList: Array<hostInter> = configGet('hostList')
-  const currentHost: number = configGet('currentHost')
-  return hostList[currentHost].value
+  const currentHost: hostType = configGet('currentHost')
+  return currentHost
 }
 
 /*
@@ -40,8 +39,8 @@ export function getNowToken(): gitInter {
 /*
  * 添加token
  * */
-export async function addGitToken(gitToken: gitInter): Promise<boolean> {
-  const hostType: hostType = getNowHost()
+export async function addGitToken(gitToken: gitInter, platform: hostType): Promise<boolean> {
+  const hostType = platform
   const list: Array<gitInter> = configGet(hostType)
   const allReadyHave = list.findIndex(data => data.host == gitToken.host)
   if (allReadyHave != -1) {
