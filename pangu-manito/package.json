@@ -1,5 +1,5 @@
 {
-  "name": "pangumanito",
+  "name": "@fancy-world/pangumanito",
   "version": "1.0.0",
   "description": "初始化工具",
   "main": "./build/index.js",
