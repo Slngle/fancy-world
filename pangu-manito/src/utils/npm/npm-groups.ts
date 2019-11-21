@@ -1,8 +1,9 @@
 import { getNowToken } from '../../configStore'
+import { getNpmProjectAndMessage } from './npm-spider'
 
 export default class Groups {
-  async search() {
+  async search(): Promise<any> {
     const { host, token, group } = getNowToken()
-    // request('https://www.npmjs.com/~yjm')
+    return await getNpmProjectAndMessage(host, token, group)
   }
 }

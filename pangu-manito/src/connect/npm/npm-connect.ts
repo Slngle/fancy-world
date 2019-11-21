@@ -20,7 +20,7 @@ export function connect(): any {
       search: async (): Promise<any> => {
         const spinner = ora('start search groups...')
         spinner.start()
-        const data = await api.Groups.search({ organization })
+        const data = await api.Groups.search()
         spinner.stop()
         return data
       }

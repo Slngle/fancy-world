@@ -2,6 +2,7 @@ import inquirer from 'inquirer'
 import { addGitToken, configGet } from '../configStore'
 import { allReadyHave } from './interaction-part'
 import { safeDelete } from './file-part'
+import { getVersion } from '../utils/npm/npm-utils'
 
 /*
  * 在configStore里面插入信息
@@ -216,7 +217,7 @@ export async function configStoreQes(): Promise<any> {
 }
 
 /*
- * 选择projectId
+ * 选择哪个git仓库
  * */
 export async function chooseProjectId(projects: Array<any>): Promise<number> {
   // @ts-ignore
@@ -256,6 +257,52 @@ export async function chooseTagName(tags: Array<any>): Promise<string> {
       name: 'tagName',
       message: '选择哪一个版本？',
       choices: tags
+    }
+  ])
+  return tagName
+}
+
+/*
+ * 选择哪个npm仓库
+ * */
+export async function chooseNpmName(projects: Array<any>): Promise<string> {
+  projects = projects.map(data => {
+    return {
+      name: `${data.title}`,
+      value: data.title
+    }
+  })
+  console.log()
+  const { projectId } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'projectId',
+      message: '选择拉取哪一个仓库？',
+      choices: projects
+    }
+  ])
+  return projectId
+}
+
+/*
+ * npm包的版本号
+ * */
+export async function chooseNpmTag(npmName: string): Promise<string> {
+  // @ts-ignore
+  const list: Array<any> = await getVersion(npmName)
+  const listFormat: Array<any> = []
+  list.forEach(data => {
+    listFormat.push({
+      name: data,
+      value: data
+    })
+  })
+  const { tagName } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'tagName',
+      message: '选择哪一个版本？',
+      choices: listFormat
     }
   ])
   return tagName

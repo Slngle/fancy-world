@@ -40,6 +40,7 @@ const inquirer_1 = __importDefault(require('inquirer'))
 const configStore_1 = require('../configStore')
 const interaction_part_1 = require('./interaction-part')
 const file_part_1 = require('./file-part')
+const npm_utils_1 = require('../utils/npm/npm-utils')
 /*
  * 在configStore里面插入信息
  * */
@@ -263,7 +264,7 @@ function configStoreQes() {
 }
 exports.configStoreQes = configStoreQes
 /*
- * 选择projectId
+ * 选择哪个git仓库
  * */
 function chooseProjectId(projects) {
   return __awaiter(this, void 0, void 0, function*() {
@@ -311,3 +312,53 @@ function chooseTagName(tags) {
   })
 }
 exports.chooseTagName = chooseTagName
+/*
+ * 选择哪个npm仓库
+ * */
+function chooseNpmName(projects) {
+  return __awaiter(this, void 0, void 0, function*() {
+    projects = projects.map(data => {
+      return {
+        name: `${data.title}`,
+        value: data.title
+      }
+    })
+    console.log()
+    const { projectId } = yield inquirer_1.default.prompt([
+      {
+        type: 'list',
+        name: 'projectId',
+        message: '选择拉取哪一个仓库？',
+        choices: projects
+      }
+    ])
+    return projectId
+  })
+}
+exports.chooseNpmName = chooseNpmName
+/*
+ * npm包的版本号
+ * */
+function chooseNpmTag(npmName) {
+  return __awaiter(this, void 0, void 0, function*() {
+    // @ts-ignore
+    const list = yield npm_utils_1.getVersion(npmName)
+    const listFormat = []
+    list.forEach(data => {
+      listFormat.push({
+        name: data,
+        value: data
+      })
+    })
+    const { tagName } = yield inquirer_1.default.prompt([
+      {
+        type: 'list',
+        name: 'tagName',
+        message: '选择哪一个版本？',
+        choices: listFormat
+      }
+    ])
+    return tagName
+  })
+}
+exports.chooseNpmTag = chooseNpmTag

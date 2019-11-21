@@ -21,7 +21,7 @@
   "author": "yjm <497501886@qq.com>",
   "license": "ISC",
   "dependencies": {
-    "@types/gitlab": "^2.0.0",
+    "cheerio": "^1.0.0-rc.3",
     "commander": "^4.0.1",
     "configstore": "^5.0.0",
     "figlet": "^1.2.4",
@@ -30,10 +30,12 @@
     "inquirer": "^7.0.0",
     "lodash": "^4.17.15",
     "ora": "^4.0.3",
+    "superagent": "^5.1.0",
     "update-notifier": "^3.0.1",
     "yosay": "^2.0.2"
   },
   "devDependencies": {
+    "@types/gitlab": "^2.0.0",
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
     "@babel/plugin-proposal-do-expressions": "^7.5.0",
@@ -42,6 +44,7 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/cheerio": "^0.22.14",
     "@types/commander": "^2.12.2",
     "@types/configstore": "^4.0.0",
     "@types/figlet": "^1.2.0",
@@ -50,6 +53,7 @@
     "@types/lodash": "^4.14.146",
     "@types/node": "^12.12.5",
     "@types/ora": "^3.2.0",
+    "@types/superagent": "^4.1.4",
     "@types/update-notifier": "^2.5.0",
     "@types/yosay": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^2.6.0",

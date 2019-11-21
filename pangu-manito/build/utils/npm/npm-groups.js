@@ -31,9 +31,14 @@ var __awaiter =
     })
   }
 Object.defineProperty(exports, '__esModule', { value: true })
+const configStore_1 = require('../../configStore')
+const npm_spider_1 = require('./npm-spider')
 class Groups {
-  search(payload) {
-    return __awaiter(this, void 0, void 0, function*() {})
+  search() {
+    return __awaiter(this, void 0, void 0, function*() {
+      const { host, token, group } = configStore_1.getNowToken()
+      return yield npm_spider_1.getNpmProjectAndMessage(host, token, group)
+    })
   }
 }
 exports.default = Groups

@@ -43,19 +43,19 @@ class Npm {
     this.Groups = (function() {
       const api = new npm_groups_1.default()
       return {
-        search(payload) {
+        search() {
           return __awaiter(this, void 0, void 0, function*() {
-            yield api.search(payload)
+            return yield api.search()
           })
         }
       }
     })()
     this.Tags = (function() {
-      const api = new npm_groups_1.default()
+      const api = new npm_tags_1.default()
       return {
         all(payload) {
           return __awaiter(this, void 0, void 0, function*() {
-            yield api.all(payload)
+            return yield api.all(payload)
           })
         }
       }
@@ -63,16 +63,6 @@ class Npm {
     this.userName = userName
     this.host = host
     this.organization = organization
-  }
-  Tags() {
-    const api = new npm_tags_1.default()
-    return {
-      all(payload) {
-        return __awaiter(this, void 0, void 0, function*() {
-          yield api.all(payload)
-        })
-      }
-    }
   }
 }
 exports.default = Npm

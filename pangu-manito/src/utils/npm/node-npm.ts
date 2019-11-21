@@ -16,7 +16,7 @@ export default class Npm {
     const api = new Groups()
     return {
       async search() {
-        await api.search()
+        return await api.search()
       }
     }
   })()
@@ -25,7 +25,7 @@ export default class Npm {
     const api = new Tags()
     return {
       async all(payload: projectParams) {
-        await api.all(payload)
+        return await api.all(payload)
       }
     }
   })()

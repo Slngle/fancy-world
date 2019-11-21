@@ -40,25 +40,25 @@ const configStore_1 = require('../../configStore')
 const ora_1 = __importDefault(require('ora'))
 const node_npm_1 = __importDefault(require('../../utils/npm/node-npm'))
 function connect() {
-  const { host, token, group } = configStore_1.getNowToken()
-  const api = new node_npm_1.default(host, group, token)
+  const { host, token, group: organization } = configStore_1.getNowToken()
+  const api = new node_npm_1.default(host, organization, token)
   return {
     Tags: {
-      all: projectId =>
+      all: packageName =>
         __awaiter(this, void 0, void 0, function*() {
           const spinner = ora_1.default('start loading groups...')
           spinner.start()
-          const data = yield api.Tags.all(projectId)
+          const data = yield api.Tags.all({ packageName })
           spinner.stop()
           return data
         })
     },
     Groups: {
-      search: organizations =>
+      search: () =>
         __awaiter(this, void 0, void 0, function*() {
           const spinner = ora_1.default('start search groups...')
           spinner.start()
-          const data = yield api.Groups.search(organizations)
+          const data = yield api.Groups.search()
           spinner.stop()
           return data
         })
