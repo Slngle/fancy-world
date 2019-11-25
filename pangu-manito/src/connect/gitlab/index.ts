@@ -23,7 +23,7 @@ let chooseMessage: chooseMessage = {
 /*
  * 选择哪个project
  * */
-export async function chooseProject(folder: string): Promise<any> {
+export async function chooseProject(folder: string): Promise<boolean> {
   const api = connectHost()
   const { group } = getNowToken()
   let chooseGroup, projects, Tags
@@ -42,10 +42,12 @@ export async function chooseProject(folder: string): Promise<any> {
         ref,
         folder
       }
-      await createFiles({ files })
+      return await createFiles({ files })
+    } else {
+      return false
     }
   } catch (e) {
-    console.log(e)
+    return false
   }
 
   if (!chooseGroup || !chooseGroup.length) {

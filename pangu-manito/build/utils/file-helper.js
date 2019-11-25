@@ -69,3 +69,19 @@ function folderNotStat(path) {
   })
 }
 exports.folderNotStat = folderNotStat
+/*
+ * exec 子进程
+ * */
+function execPro(command) {
+  const { exec } = require('child_process')
+  return new Promise((resolve, reject) => {
+    exec(command, (err, soldout) => {
+      if (!err) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}
+exports.execPro = execPro

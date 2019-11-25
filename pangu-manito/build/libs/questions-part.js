@@ -249,12 +249,12 @@ function configStoreQes() {
         message: '想做什么操作呢？',
         choices: [
           {
-            name: '重置store',
+            name: '重置configStore',
             value: 'reset'
           },
           {
-            name: '编辑Gitlab授权信息',
-            value: 'gitlab-auth'
+            name: '配置configStore',
+            value: 'edit'
           }
         ]
       }
@@ -263,6 +263,68 @@ function configStoreQes() {
   })
 }
 exports.configStoreQes = configStoreQes
+/*
+ * 重置二次确认
+ * */
+function resetQur() {
+  return __awaiter(this, void 0, void 0, function*() {
+    // @ts-ignore
+    const { config } = yield inquirer_1.default.prompt([
+      {
+        type: 'list',
+        name: 'config',
+        message: '重置configStore将会删除您自定义的所有配置！',
+        choices: [
+          {
+            name: '取消',
+            value: false
+          },
+          {
+            name: '重置',
+            value: true
+          }
+        ]
+      }
+    ])
+    return config
+  })
+}
+exports.resetQur = resetQur
+/*
+ * 选择是添加 还是删除 还是编辑 或者是选择默认拉取平台
+ * */
+function chooseActions() {
+  return __awaiter(this, void 0, void 0, function*() {
+    // @ts-ignore
+    const { actions } = yield inquirer_1.default.prompt([
+      {
+        type: 'list',
+        name: 'actions',
+        message: '重置configStore将会删除您自定义的所有配置！',
+        choices: [
+          // {
+          //   name: '添加拉取平台',
+          //   value: 'add'
+          // },
+          // {
+          //   name: '删除拉取平台',
+          //   value: 'delete'
+          // },
+          // {
+          //   name: '编辑拉取平台',
+          //   value: 'edit'
+          // },
+          {
+            name: '选择默认拉取平台',
+            value: 'chooseDefault'
+          }
+        ]
+      }
+    ])
+    return actions
+  })
+}
+exports.chooseActions = chooseActions
 /*
  * 选择哪个git仓库
  * */

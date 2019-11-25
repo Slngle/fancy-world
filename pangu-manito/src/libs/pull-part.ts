@@ -1,6 +1,7 @@
 import { configSet, getNowHost, getNowToken } from '../configStore'
 import { choosePlatform, fileProcessing, setTokenInquirer } from './questions-part'
 import { readdirFiles } from '../utils/file-helper'
+import { downloadInter } from './interaction-part'
 
 export async function getToken(): Promise<gitInter> {
   const nowToken: gitInter = getNowToken()
@@ -50,10 +51,12 @@ export async function pullCodeing(folder: string) {
     const host = getNowHost()
     if (host == 'gitlab') {
       const { chooseProject } = require('../connect/gitlab')
-      await chooseProject(folder)
+      const success = await chooseProject(folder)
+      downloadInter(success)
     } else if (host == 'npm') {
       const { chooseProject } = require('../connect/npm')
-      await chooseProject(folder)
+      const success = await chooseProject(folder)
+      downloadInter(success)
     }
   }
 }

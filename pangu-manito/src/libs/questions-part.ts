@@ -203,17 +203,77 @@ export async function configStoreQes(): Promise<any> {
       message: '想做什么操作呢？',
       choices: [
         {
-          name: '重置store',
+          name: '重置configStore',
           value: 'reset'
         },
         {
-          name: '编辑Gitlab授权信息',
-          value: 'gitlab-auth'
+          name: '配置configStore',
+          value: 'edit'
         }
       ]
     }
   ])
   return config
+}
+
+/*
+ * 重置二次确认
+ * */
+
+export async function resetQur(): Promise<any> {
+  // @ts-ignore
+  const { config } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'config',
+      message: '重置configStore将会删除您自定义的所有配置！',
+      choices: [
+        {
+          name: '取消',
+          value: false
+        },
+        {
+          name: '重置',
+          value: true
+        }
+      ]
+    }
+  ])
+  return config
+}
+
+/*
+ * 选择是添加 还是删除 还是编辑 或者是选择默认拉取平台
+ * */
+
+export async function chooseActions(): Promise<'add' | 'delete' | 'edit' | 'chooseDefault'> {
+  // @ts-ignore
+  const { actions } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'actions',
+      message: '重置configStore将会删除您自定义的所有配置！',
+      choices: [
+        // {
+        //   name: '添加拉取平台',
+        //   value: 'add'
+        // },
+        // {
+        //   name: '删除拉取平台',
+        //   value: 'delete'
+        // },
+        // {
+        //   name: '编辑拉取平台',
+        //   value: 'edit'
+        // },
+        {
+          name: '选择默认拉取平台',
+          value: 'chooseDefault'
+        }
+      ]
+    }
+  ])
+  return actions
 }
 
 /*

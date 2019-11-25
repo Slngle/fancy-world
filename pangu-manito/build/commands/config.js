@@ -33,14 +33,27 @@ var __awaiter =
 Object.defineProperty(exports, '__esModule', { value: true })
 const questions_part_1 = require('../libs/questions-part')
 const configStore_1 = require('../configStore')
+const interaction_part_1 = require('../libs/interaction-part')
 function config() {
   return __awaiter(this, void 0, void 0, function*() {
     const config = yield questions_part_1.configStoreQes()
     if (config == 'reset') {
-      //重置configStore
-      configStore_1.resetConfig()
-    } else if (config == 'gitlab-auth') {
-      //修改
+      // 重置configStore
+      const reset = yield questions_part_1.resetQur()
+      if (reset) {
+        configStore_1.resetConfig()
+      }
+    } else if (config == 'edit') {
+      // 修改
+      const action = yield questions_part_1.chooseActions()
+      if (action == 'add') {
+      } else if (action == 'delete') {
+      } else if (action == 'edit') {
+      } else if (action == 'chooseDefault') {
+        const { platform } = yield questions_part_1.choosePlatform()
+        configStore_1.configSet('currentHost', platform)
+        interaction_part_1.showInfo()
+      }
     }
   })
 }

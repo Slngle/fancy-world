@@ -63,3 +63,19 @@ export function folderNotStat(path): Promise<any> {
     })
   })
 }
+
+/*
+ * exec 子进程
+ * */
+export function execPro(command: string): Promise<any> {
+  const { exec } = require('child_process')
+  return new Promise((resolve, reject) => {
+    exec(command, (err, soldout) => {
+      if (!err) {
+        resolve(true)
+      } else {
+        resolve(false)
+      }
+    })
+  })
+}

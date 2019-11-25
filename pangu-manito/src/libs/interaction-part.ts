@@ -133,3 +133,12 @@ export function showInfo(): void {
   console.log(`      group: ${group}`)
   console.log(`      token: ${token}`)
 }
+
+/*
+ * 下载反馈
+ * */
+
+export function downloadInter(success: boolean): void {
+  console.log()
+  console.log(chalk.yellow(`下载${success ? '成功' : '失败'}!`))
+}

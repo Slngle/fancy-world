@@ -169,3 +169,11 @@ function showInfo() {
   console.log(`      token: ${token}`)
 }
 exports.showInfo = showInfo
+/*
+ * 下载反馈
+ * */
+function downloadInter(success) {
+  console.log()
+  console.log(chalk_1.default.yellow(`下载${success ? '成功' : '失败'}!`))
+}
+exports.downloadInter = downloadInter
