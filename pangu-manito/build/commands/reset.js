@@ -31,9 +31,20 @@ var __awaiter =
     })
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-class Groups {
-  all(payload) {
-    return __awaiter(this, void 0, void 0, function*() {})
-  }
+const questions_part_1 = require('../libs/questions-part')
+const configStore_1 = require('../configStore')
+const interaction_part_1 = require('../libs/interaction-part')
+function reset() {
+  return __awaiter(this, void 0, void 0, function*() {
+    const config = yield questions_part_1.configStoreQes()
+    if (config == 'reset') {
+      // 重置configStore
+      const reset = yield questions_part_1.resetQur()
+      if (reset) {
+        configStore_1.resetConfig()
+        interaction_part_1.showInfo()
+      }
+    }
+  })
 }
-exports.default = Groups
+exports.reset = reset

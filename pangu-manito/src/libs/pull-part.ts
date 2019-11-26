@@ -14,6 +14,7 @@ export async function getToken(): Promise<gitInter> {
     const { platform } = await choosePlatform()
     //2. (第一次添加)设置为默认平台
     configSet('currentHost', platform)
+    configSet('currentToken', 0)
     //3. 写入内容
     if (platform == 'gitlab') {
       const { host, token, group } = await setTokenInquirer('gitlab')

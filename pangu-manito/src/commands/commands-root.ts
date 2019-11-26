@@ -4,6 +4,7 @@ import { init } from './init'
 import { create } from './create'
 import { config } from './config'
 import { show } from './show'
+import { reset } from './reset'
 const pkg = require(`${getCurrentRoot()}/package.json`)
 
 export function commands(args: any): void {
@@ -32,5 +33,12 @@ export function commands(args: any): void {
     .action(async function(): Promise<any> {
       await config()
     })
+  program
+    .command('reset')
+    .description('重置configStore')
+    .action(async function(): Promise<any> {
+      await reset()
+    })
+
   program.parse(args)
 }

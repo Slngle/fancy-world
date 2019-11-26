@@ -118,7 +118,7 @@ export function showInfo(): void {
     console.log(`    ${value}:`)
     if (platValue.length) {
       platValue.forEach(item => {
-        console.log(`      host:${item.host}`)
+        console.log(`      host: ${item.host} && group: ${item.group}`)
       })
     } else {
       console.log(`      host:null`)

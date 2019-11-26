@@ -68,7 +68,7 @@ export async function choosePlatform(): Promise<platform> {
  * 选择 哪一个token
  * */
 
-export async function chooseTokenSingle(list: Array<any>): Promise<any> {
+export async function chooseTokenSingle(list: Array<any>, message: string): Promise<any> {
   const listFormat: Array<any> = []
 
   list.forEach((data, index) => {
@@ -81,7 +81,7 @@ export async function chooseTokenSingle(list: Array<any>): Promise<any> {
     {
       type: 'list',
       name: 'index',
-      message: '请选择平台',
+      message,
       choices: listFormat
     }
   ])
@@ -91,8 +91,8 @@ export async function chooseTokenSingle(list: Array<any>): Promise<any> {
 /*
  * 根据platform的不同 请求不同的quest
  * */
-export async function getMessage(): Promise<any> {
-  const platform = configGet('currentHost')
+export async function getMessage(plat?: string): Promise<any> {
+  const platform = plat || configGet('currentHost')
   if (platform == 'gitlab') {
     return await getGitLabAuthMessage()
   } else if (platform == 'npm') {
@@ -238,15 +238,11 @@ export async function configStoreQes(): Promise<any> {
     {
       type: 'list',
       name: 'config',
-      message: '想做什么操作呢？',
+      message: '想重置哪份配置呢？',
       choices: [
         {
           name: '重置configStore',
           value: 'reset'
-        },
-        {
-          name: '配置configStore',
-          value: 'edit'
         }
       ]
     }
@@ -262,7 +258,7 @@ export async function resetQur(): Promise<any> {
   // @ts-ignore
   const { config } = await inquirer.prompt([
     {
-      type: 'list',
+      type: 'confirm',
       name: 'config',
       message: '重置configStore将会删除您自定义的所有配置！',
       choices: [
