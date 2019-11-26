@@ -65,6 +65,44 @@ export async function choosePlatform(): Promise<platform> {
 }
 
 /*
+ * 选择 哪一个token
+ * */
+
+export async function chooseTokenSingle(list: Array<any>): Promise<any> {
+  const listFormat: Array<any> = []
+
+  list.forEach((data, index) => {
+    listFormat.push({
+      name: `${data.host} && ${data.group}`,
+      value: index
+    })
+  })
+  const { index } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'index',
+      message: '请选择平台',
+      choices: listFormat
+    }
+  ])
+  return { index }
+}
+
+/*
+ * 根据platform的不同 请求不同的quest
+ * */
+export async function getMessage(): Promise<any> {
+  const platform = configGet('currentHost')
+  if (platform == 'gitlab') {
+    return await getGitLabAuthMessage()
+  } else if (platform == 'npm') {
+    return await getNpmAuthMessage()
+  } else {
+    return await getGitHubAuthMessage()
+  }
+}
+
+/*
  * 询问授权信息
  * */
 
@@ -252,20 +290,20 @@ export async function chooseActions(): Promise<'add' | 'delete' | 'edit' | 'choo
     {
       type: 'list',
       name: 'actions',
-      message: '重置configStore将会删除您自定义的所有配置！',
+      message: '需要做哪些配置呢？',
       choices: [
-        // {
-        //   name: '添加拉取平台',
-        //   value: 'add'
-        // },
-        // {
-        //   name: '删除拉取平台',
-        //   value: 'delete'
-        // },
-        // {
-        //   name: '编辑拉取平台',
-        //   value: 'edit'
-        // },
+        {
+          name: '添加拉取平台',
+          value: 'add'
+        },
+        {
+          name: '删除拉取平台',
+          value: 'delete'
+        },
+        {
+          name: '编辑拉取平台',
+          value: 'edit'
+        },
         {
           name: '选择默认拉取平台',
           value: 'chooseDefault'

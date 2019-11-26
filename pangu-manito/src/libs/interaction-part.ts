@@ -142,3 +142,21 @@ export function downloadInter(success: boolean): void {
   console.log()
   console.log(chalk.yellow(`下载${success ? '成功' : '失败'}!`))
 }
+
+/*
+ * 没有token集
+ * */
+
+export function noTokenList(): void {
+  console.log()
+  console.log(chalk.yellow(`当前平台下不存在可选择的host，请去添加！`))
+}
+
+/*
+ * 已存在
+ * */
+
+export function alreadyHaveTokens(): void {
+  console.log()
+  console.log(chalk.yellow(`当前已有该平台的拉取源！`))
+}
