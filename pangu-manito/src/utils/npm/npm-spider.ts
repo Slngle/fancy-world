@@ -1,6 +1,5 @@
 import cheerio from 'cheerio'
 import request from 'superagent'
-import { async } from 'rxjs/internal/scheduler/async'
 
 export function getNpmProjectAndMessage(host, userName, organization): Promise<any> {
   return new Promise<any>(resolve => {

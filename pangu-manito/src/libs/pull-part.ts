@@ -20,7 +20,8 @@ export async function getToken(): Promise<gitInter> {
       const { host, token, group } = await setTokenInquirer('gitlab')
       return { host, token, group }
     } else if (platform == 'github') {
-      return { host: '', token: '', group: '' }
+      const { host, token, group } = await setTokenInquirer('github')
+      return { host, token, group }
     } else if (platform == 'npm') {
       const { host, token, group } = await setTokenInquirer('npm')
       return { host, token, group }
@@ -56,6 +57,10 @@ export async function pullCodeing(folder: string) {
       downloadInter(success)
     } else if (host == 'npm') {
       const { chooseProject } = require('../connect/npm')
+      const success = await chooseProject(folder)
+      downloadInter(success)
+    } else if (host == 'github') {
+      const { chooseProject } = require('../connect/github')
       const success = await chooseProject(folder)
       downloadInter(success)
     }

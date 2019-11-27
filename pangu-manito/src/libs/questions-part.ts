@@ -140,7 +140,7 @@ export async function getGitHubAuthMessage(): Promise<gitInter> {
     {
       name: 'host',
       type: 'list',
-      message: `npm的url地址  `,
+      message: `github的url地址  `,
       choices: [
         {
           name: 'https://www.npmjs.com',
@@ -151,12 +151,18 @@ export async function getGitHubAuthMessage(): Promise<gitInter> {
     {
       name: 'group',
       type: 'input',
-      message: `请填写npm的Organizations  `
+      message: `请选择您的分组  `,
+      choices: [
+        {
+          name: 'public',
+          value: 'public'
+        }
+      ]
     },
     {
       name: 'token',
       type: 'input',
-      message: `请填写npm的用户名  `
+      message: `请填写github的用户名  `
     }
   ])
   return { host, group, token }
