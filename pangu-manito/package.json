@@ -21,6 +21,7 @@
   "author": "yjm <497501886@qq.com>",
   "license": "ISC",
   "dependencies": {
+    "@octokit/rest": "^16.35.0",
     "cheerio": "^1.0.0-rc.3",
     "commander": "^4.0.1",
     "configstore": "^5.0.0",
@@ -35,7 +36,6 @@
     "yosay": "^2.0.2"
   },
   "devDependencies": {
-    "@types/gitlab": "^2.0.0",
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
     "@babel/plugin-proposal-do-expressions": "^7.5.0",
@@ -49,6 +49,7 @@
     "@types/configstore": "^4.0.0",
     "@types/figlet": "^1.2.0",
     "@types/fullname": "^2.1.29",
+    "@types/gitlab": "^2.0.0",
     "@types/inquirer": "^6.5.0",
     "@types/lodash": "^4.14.146",
     "@types/node": "^12.12.5",

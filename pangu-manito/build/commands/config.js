@@ -55,7 +55,7 @@ function chooseDefault(list) {
  * */
 function add(list, platform) {
   return __awaiter(this, void 0, void 0, function*() {
-    const { host, group, token } = yield questions_part_1.getMessage()
+    const { host, group, token } = yield questions_part_1.getMessage(platform)
     let alreadyHave = false
     list.forEach(data => {
       if (host == data.host && group == data.group) {

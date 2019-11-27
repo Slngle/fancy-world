@@ -42,7 +42,7 @@ const pkg = require(`${file_helper_1.getCurrentRoot()}/package.json`)
 const schema = {
   hostList: [
     { name: 'gitlab', value: 'gitlab' },
-    // { name: 'github', value: 'github' },
+    { name: 'github', value: 'github' },
     { name: 'npm', value: 'npm' }
   ],
   github: [],

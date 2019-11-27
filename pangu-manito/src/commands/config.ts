@@ -26,7 +26,7 @@ async function chooseDefault(list: any[]) {
  * 添加一组tokens集合
  * */
 async function add(list: any[], platform: hostType) {
-  const { host, group, token } = await getMessage()
+  const { host, group, token } = await getMessage(platform)
   let alreadyHave = false
   list.forEach(data => {
     if (host == data.host && group == data.group) {

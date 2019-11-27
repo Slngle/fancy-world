@@ -53,7 +53,8 @@ function getToken() {
         const { host, token, group } = yield questions_part_1.setTokenInquirer('gitlab')
         return { host, token, group }
       } else if (platform == 'github') {
-        return { host: '', token: '', group: '' }
+        const { host, token, group } = yield questions_part_1.setTokenInquirer('github')
+        return { host, token, group }
       } else if (platform == 'npm') {
         const { host, token, group } = yield questions_part_1.setTokenInquirer('npm')
         return { host, token, group }
@@ -93,6 +94,10 @@ function pullCodeing(folder) {
         interaction_part_1.downloadInter(success)
       } else if (host == 'npm') {
         const { chooseProject } = require('../connect/npm')
+        const success = yield chooseProject(folder)
+        interaction_part_1.downloadInter(success)
+      } else if (host == 'github') {
+        const { chooseProject } = require('../connect/github')
         const success = yield chooseProject(folder)
         interaction_part_1.downloadInter(success)
       }

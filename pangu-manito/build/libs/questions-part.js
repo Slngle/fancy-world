@@ -184,23 +184,23 @@ function getGitHubAuthMessage() {
       {
         name: 'host',
         type: 'list',
-        message: `npm的url地址  `,
+        message: `github的url地址  `,
         choices: [
           {
-            name: 'https://www.npmjs.com',
-            value: 'https://www.npmjs.com'
+            name: 'https://github.com',
+            value: 'https://github.com'
           }
         ]
       },
       {
         name: 'group',
         type: 'input',
-        message: `请填写npm的Organizations  `
+        message: `请填写github用户名  `
       },
       {
         name: 'token',
         type: 'input',
-        message: `请填写npm的用户名  `
+        message: `请填写access token  `
       }
     ])
     return { host, group, token }
