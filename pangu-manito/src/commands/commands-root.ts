@@ -5,6 +5,7 @@ import { create } from './create'
 import { config } from './config'
 import { show } from './show'
 import { reset } from './reset'
+import { downloadInter } from '../libs/interaction-part'
 const pkg = require(`${getCurrentRoot()}/package.json`)
 
 export function commands(args: any): void {
@@ -13,13 +14,15 @@ export function commands(args: any): void {
     .command('init')
     .description('当前目录下初始化')
     .action(async function(): Promise<any> {
-      await init(`${getCurrentCWD()}`)
+      const success = await init(`${getCurrentCWD()}`)
+      downloadInter(success)
     })
   program
     .command('create <projectName>')
     .description('创建<projectName>并在该目录下初始化')
     .action(async function(projectName): Promise<any> {
-      await create(`${getCurrentCWD()}`, `${projectName}`)
+      const success = await create(`${getCurrentCWD()}`, `${projectName}`)
+      downloadInter(success)
     })
   program
     .command('info')

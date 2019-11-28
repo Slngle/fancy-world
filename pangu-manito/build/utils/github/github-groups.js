@@ -31,17 +31,32 @@ var __awaiter =
     })
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-const interaction_part_1 = require('../libs/interaction-part')
-const pull_part_1 = require('../libs/pull-part')
-function init(folder) {
-  return __awaiter(this, void 0, void 0, function*() {
-    interaction_part_1.showCliName() // 展示下cli的名字
-    yield interaction_part_1.showUserAllo() // 对你的一声问候
-    const { host, token, group } = yield pull_part_1.getToken()
-    if (host && token && group) {
-      // 如果拿到了token等信息 就去pull code
-      return yield pull_part_1.pullCodeing(folder)
-    }
-  })
+const request_1 = require('./request')
+class Groups {
+  constructor(userName, token) {
+    this.userName = userName
+    this.token = token
+  }
+  search() {}
+  show() {
+    return __awaiter(this, void 0, void 0, function*() {
+      const { userName, token } = this
+      const data = yield request_1.requestGet(`/users/${userName}/repos?access_token=${token}`)
+      if (data && data.length) {
+        const list = []
+        data.forEach(item => {
+          list.push({
+            id: item.name,
+            realId: item.id,
+            name: item.name,
+            description: item.description
+          })
+        })
+        return list
+      } else {
+        return null
+      }
+    })
+  }
 }
-exports.init = init
+exports.default = Groups

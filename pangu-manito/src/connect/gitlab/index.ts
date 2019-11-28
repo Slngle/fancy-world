@@ -48,14 +48,14 @@ export async function chooseProject(folder: string): Promise<boolean> {
     }
   } catch (e) {
     return false
-  }
-
-  if (!chooseGroup || !chooseGroup.length) {
-    noThisGroup(group)
-  } else if (!projects || !projects.length) {
-    noProjects(group)
-  } else if (!Tags || !Tags.length) {
-    noTags()
+  } finally {
+    if (!chooseGroup || !chooseGroup.length) {
+      noThisGroup(group)
+    } else if (!projects || !projects.length) {
+      noProjects(group)
+    } else if (!Tags || !Tags.length) {
+      noTags()
+    }
   }
 }
 

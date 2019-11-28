@@ -41,9 +41,10 @@ function create(folder, projectName) {
     if (!stat) {
       // 文件夹已存在
       interaction_part_1.alreadyHave(projectName)
+      return false
     } else {
       yield file_helper_1.mkdir(folderComplete, { recursive: true })
-      yield init_1.init(folderComplete)
+      return yield init_1.init(folderComplete)
     }
   })
 }

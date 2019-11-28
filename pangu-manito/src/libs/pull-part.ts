@@ -46,23 +46,20 @@ export async function buildFolder(folder: string): Promise<boolean> {
   }
 }
 
-export async function pullCodeing(folder: string) {
+export async function pullCodeing(folder: string): Promise<any> {
   const success = await buildFolder(folder)
   if (success) {
     // 文件的问题解决了 就去对应的托管器选择要拉取的project
     const host = getNowHost()
     if (host == 'gitlab') {
       const { chooseProject } = require('../connect/gitlab')
-      const success = await chooseProject(folder)
-      downloadInter(success)
+      return await chooseProject(folder)
     } else if (host == 'npm') {
       const { chooseProject } = require('../connect/npm')
-      const success = await chooseProject(folder)
-      downloadInter(success)
+      return await chooseProject(folder)
     } else if (host == 'github') {
       const { chooseProject } = require('../connect/github')
-      const success = await chooseProject(folder)
-      downloadInter(success)
+      return await chooseProject(folder)
     }
   }
 }

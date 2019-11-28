@@ -7,6 +7,6 @@ export async function init(folder: string): Promise<any> {
   const { host, token, group } = await getToken()
   if (host && token && group) {
     // 如果拿到了token等信息 就去pull code
-    await pullCodeing(folder)
+    return await pullCodeing(folder)
   }
 }

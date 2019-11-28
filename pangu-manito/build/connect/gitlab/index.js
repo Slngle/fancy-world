@@ -79,13 +79,14 @@ function chooseProject(folder) {
       }
     } catch (e) {
       return false
-    }
-    if (!chooseGroup || !chooseGroup.length) {
-      interaction_part_1.noThisGroup(group)
-    } else if (!projects || !projects.length) {
-      interaction_part_1.noProjects(group)
-    } else if (!Tags || !Tags.length) {
-      interaction_part_1.noTags()
+    } finally {
+      if (!chooseGroup || !chooseGroup.length) {
+        interaction_part_1.noThisGroup(group)
+      } else if (!projects || !projects.length) {
+        interaction_part_1.noProjects(group)
+      } else if (!Tags || !Tags.length) {
+        interaction_part_1.noTags()
+      }
     }
   })
 }

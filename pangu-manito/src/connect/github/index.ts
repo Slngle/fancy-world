@@ -1,9 +1,7 @@
-import { execPro, mkdir, writeFile } from '../../utils/file-helper'
-import { chooseNpmName, chooseNpmTag } from '../../libs/questions-part'
-import { noProjects, noTags, noThisGroup } from '../../libs/interaction-part'
 import { getNowToken } from '../../configStore'
-import { safeDelete } from '../../libs/file-part'
-import ora from 'ora'
+import { noProjects, noTags, noThisGroup } from '../../libs/interaction-part'
+import { chooseProjectId, chooseTagGitHub } from '../../libs/questions-part'
+import { mkdir, writeFile } from '../../utils/file-helper'
 
 /*
  * 连接api
@@ -14,58 +12,81 @@ export function connectHost(): any {
 }
 
 /*
- * 选择拉取项目的东西
+ * projectId && ref && folder的暂存
  * */
-export async function chooseProject(folder: string): Promise<boolean> {
-  const api = connectHost()
-  let groups: Array<any> = []
-  let npmName: string = ''
-  let tag: string = ''
-  const { group } = getNowToken()
-  try {
-    groups = await api.Groups.search()
-    npmName = await chooseNpmName(groups)
-    tag = await chooseNpmTag(npmName)
-    if (tag && npmName) {
-      return await pullingCode(folder, `${npmName}`, `${tag}`)
-    } else {
-      return false
-    }
-  } catch (ex) {
-    return false
-  }
 
-  if (!groups || !groups.length) {
-    noThisGroup(group)
-  } else if (!npmName) {
-    noProjects(group)
-  } else if (!tag) {
-    noTags()
-  }
+let chooseMessage: chooseMessageS = {
+  projectName: '',
+  folder: ''
 }
 
 /*
- * 下载文件
+ * 选择哪个project
  * */
-async function pullingCode(folder: string, pkg: string, version: string): Promise<boolean> {
-  const spinner = ora('start download projects...')
-  spinner.start()
-  // 先创建一个.pangu 来暂存文件数据
-  const stagingFolder = `${folder}/.pangu`
-  const getFileFolder = `${stagingFolder}/node_modules/${pkg}`
-  await mkdir(stagingFolder, { recursive: true })
-  const letIt = await execPro(`cd ${stagingFolder} && npm install ${pkg}@${version}`)
-  if (letIt) {
-    // 把getFileFolder里面所有的文件移动到folder下面
-    const cp = await execPro(`cp -a ${getFileFolder}/. ${folder}`)
-    // 然后删除掉.pangu
-    if (cp) {
-      safeDelete(stagingFolder, false)
+export async function chooseProject(folder: string) {
+  //: Promise<boolean>
+  const api = connectHost()
+  const { group } = getNowToken()
+  let projectInGroup, Tags
+  try {
+    projectInGroup = await api.Groups.show()
+    const projectName = await chooseProjectId(projectInGroup)
+    Tags = await api.Tags.all(projectName)
+    const sha = await chooseTagGitHub(Tags)
+    const files = await api.Repositories.tree(projectName, sha)
+    if (folder && projectName && files) {
+      chooseMessage = {
+        projectName,
+        folder
+      }
+      return await createFiles({ files, path: '' })
+    } else {
+      return false
     }
-    spinner.stop()
-    return !!cp
-  } else {
-    spinner.stop()
+  } catch (e) {
     return false
+  } finally {
+    if (!projectInGroup || !projectInGroup.length) {
+      noProjects(group)
+    } else if (!Tags || !Tags.length) {
+      noTags()
+    }
   }
+}
+
+async function createSingle({ sha, path, folderPath }) {
+  const api = connectHost()
+  const { projectName, folder } = chooseMessage
+  const folderCombine = `${folder}/${folderPath}`
+  const file = await api.RepositoryFiles.show(projectName, sha, path)
+  const dataContent = Buffer.from(file.content, 'base64').toString()
+  await mkdir(folderCombine, { recursive: true })
+  await writeFile(`${folderCombine}/${path}`, dataContent)
+  return true
+}
+
+async function findTree({ sha }) {
+  const { projectName } = chooseMessage
+  const api = connectHost()
+  const files = await api.Repositories.tree(projectName, sha)
+  return files
+}
+
+export async function createFiles({ files, path }): Promise<boolean> {
+  for (const data of files) {
+    if (data.type == 'blob') {
+      await createSingle({
+        sha: data.sha,
+        folderPath: path,
+        path: data.path
+      })
+    } else if (data.type == 'tree') {
+      const singlePath = path ? `${path}/${data.path}` : data.path
+      const tree = await findTree({ sha: data.sha })
+      if (tree && tree.length) {
+        await createFiles({ files: tree, path: singlePath })
+      }
+    }
+  }
+  return true
 }

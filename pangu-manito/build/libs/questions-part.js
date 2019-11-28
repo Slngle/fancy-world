@@ -394,7 +394,9 @@ function chooseTagName(tags) {
     // @ts-ignore
     tags = tags.map(data => {
       return {
-        name: `${data.name}(提交者：${data.commit.committer_name})`,
+        name: `${data.name}${
+          data.commit && data.commit.committer_name ? `(提交者：${data.commit.committer_name})` : ''
+        }`,
         value: data.name
       }
     })
@@ -410,6 +412,27 @@ function chooseTagName(tags) {
   })
 }
 exports.chooseTagName = chooseTagName
+/*
+ * 选择版本号
+ * */
+function chooseTagGitHub(tags) {
+  return __awaiter(this, void 0, void 0, function*() {
+    // @ts-ignore
+    if (!tags) {
+      return ''
+    }
+    const { tagName } = yield inquirer_1.default.prompt([
+      {
+        type: 'list',
+        name: 'tagName',
+        message: '选择哪一个版本？',
+        choices: tags
+      }
+    ])
+    return tagName
+  })
+}
+exports.chooseTagGitHub = chooseTagGitHub
 /*
  * 选择哪个npm仓库
  * */

@@ -314,7 +314,7 @@ export async function chooseActions(): Promise<'add' | 'delete' | 'edit' | 'choo
 /*
  * 选择哪个git仓库
  * */
-export async function chooseProjectId(projects: Array<any>): Promise<number> {
+export async function chooseProjectId(projects: Array<any>): Promise<number | string> {
   // @ts-ignore
   projects = projects.map(data => {
     return {
@@ -342,10 +342,32 @@ export async function chooseTagName(tags: Array<any>): Promise<string> {
   // @ts-ignore
   tags = tags.map(data => {
     return {
-      name: `${data.name}(提交者：${data.commit.committer_name})`,
+      name: `${data.name}${
+        data.commit && data.commit.committer_name ? `(提交者：${data.commit.committer_name})` : ''
+      }`,
       value: data.name
     }
   })
+  const { tagName } = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'tagName',
+      message: '选择哪一个版本？',
+      choices: tags
+    }
+  ])
+  return tagName
+}
+
+/*
+ * 选择版本号
+ * */
+
+export async function chooseTagGitHub(tags: Array<any>): Promise<string> {
+  // @ts-ignore
+  if (!tags) {
+    return ''
+  }
   const { tagName } = await inquirer.prompt([
     {
       type: 'list',

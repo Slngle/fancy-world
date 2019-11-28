@@ -34,7 +34,6 @@ Object.defineProperty(exports, '__esModule', { value: true })
 const configStore_1 = require('../configStore')
 const questions_part_1 = require('./questions-part')
 const file_helper_1 = require('../utils/file-helper')
-const interaction_part_1 = require('./interaction-part')
 function getToken() {
   return __awaiter(this, void 0, void 0, function*() {
     const nowToken = configStore_1.getNowToken()
@@ -90,16 +89,13 @@ function pullCodeing(folder) {
       const host = configStore_1.getNowHost()
       if (host == 'gitlab') {
         const { chooseProject } = require('../connect/gitlab')
-        const success = yield chooseProject(folder)
-        interaction_part_1.downloadInter(success)
+        return yield chooseProject(folder)
       } else if (host == 'npm') {
         const { chooseProject } = require('../connect/npm')
-        const success = yield chooseProject(folder)
-        interaction_part_1.downloadInter(success)
+        return yield chooseProject(folder)
       } else if (host == 'github') {
         const { chooseProject } = require('../connect/github')
-        const success = yield chooseProject(folder)
-        interaction_part_1.downloadInter(success)
+        return yield chooseProject(folder)
       }
     }
   })

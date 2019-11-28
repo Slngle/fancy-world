@@ -23,6 +23,11 @@ interface chooseMessage {
   folder: string
 }
 
+interface chooseMessageS {
+  projectName: string | number
+  folder: string
+}
+
 interface hostInter {
   name: string
   value: hostType

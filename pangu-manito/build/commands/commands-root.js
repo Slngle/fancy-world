@@ -43,6 +43,7 @@ const create_1 = require('./create')
 const config_1 = require('./config')
 const show_1 = require('./show')
 const reset_1 = require('./reset')
+const interaction_part_1 = require('../libs/interaction-part')
 const pkg = require(`${file_helper_1.getCurrentRoot()}/package.json`)
 function commands(args) {
   commander_1.default.version(pkg.version, '-V, --version').usage('<command> [options]')
@@ -51,7 +52,8 @@ function commands(args) {
     .description('当前目录下初始化')
     .action(function() {
       return __awaiter(this, void 0, void 0, function*() {
-        yield init_1.init(`${file_helper_1.getCurrentCWD()}`)
+        const success = yield init_1.init(`${file_helper_1.getCurrentCWD()}`)
+        interaction_part_1.downloadInter(success)
       })
     })
   commander_1.default
@@ -59,7 +61,8 @@ function commands(args) {
     .description('创建<projectName>并在该目录下初始化')
     .action(function(projectName) {
       return __awaiter(this, void 0, void 0, function*() {
-        yield create_1.create(`${file_helper_1.getCurrentCWD()}`, `${projectName}`)
+        const success = yield create_1.create(`${file_helper_1.getCurrentCWD()}`, `${projectName}`)
+        interaction_part_1.downloadInter(success)
       })
     })
   commander_1.default
