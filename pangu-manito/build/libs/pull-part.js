@@ -73,7 +73,6 @@ function pullCodeing(folder) {
             const host = configStore_1.getNowHost();
             if (host == 'gitlab') {
                 const { chooseProject } = require('../connect/gitlab/index');
-                console.log(chooseProject);
                 return yield chooseProject(folder);
             }
             else if (host == 'npm') {
