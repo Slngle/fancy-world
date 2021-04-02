@@ -51,14 +51,17 @@ export async function pullCodeing(folder: string): Promise<any> {
   if (success) {
     // 文件的问题解决了 就去对应的托管器选择要拉取的project
     const host = getNowHost()
+
     if (host == 'gitlab') {
-      const { chooseProject } = require('../connect/gitlab')
+
+      const { chooseProject } = require('../connect/gitlab/index')
+
       return await chooseProject(folder)
     } else if (host == 'npm') {
-      const { chooseProject } = require('../connect/npm')
+      const { chooseProject } = require('../connect/npm/index')
       return await chooseProject(folder)
     } else if (host == 'github') {
-      const { chooseProject } = require('../connect/github')
+      const { chooseProject } = require('../connect/github/index')
       return await chooseProject(folder)
     }
   }

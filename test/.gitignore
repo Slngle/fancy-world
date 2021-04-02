@@ -1,7 +1,4 @@
-**/node_modules/
-.temp/
-.idea
 .idea/
-.vscode/
-.vscode
 .DS_Store
+.idea
+.idea/workspace.xml
